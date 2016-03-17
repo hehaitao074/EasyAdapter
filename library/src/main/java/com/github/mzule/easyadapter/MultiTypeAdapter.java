@@ -14,7 +14,7 @@ import java.util.List;
  */
 public abstract class MultiTypeAdapter extends BaseAdapter {
     private List<TypedValue> all;
-    private List<String> types;
+    private List<Object> types;
     private Context context;
 
     public MultiTypeAdapter(Context context) {
@@ -24,7 +24,7 @@ public abstract class MultiTypeAdapter extends BaseAdapter {
         registerTypes();
     }
 
-    protected void registerType(String... type) {
+    protected void registerType(Object... type) {
         this.types.addAll(Arrays.asList(type));
     }
 
@@ -100,5 +100,5 @@ public abstract class MultiTypeAdapter extends BaseAdapter {
 
     protected abstract void registerTypes();
 
-    protected abstract ViewSupplier<TypedValue> createViewSupplier(Context context, int position, ViewGroup parent, String type);
+    protected abstract ViewSupplier<TypedValue> createViewSupplier(Context context, int position, ViewGroup parent, Object type);
 }

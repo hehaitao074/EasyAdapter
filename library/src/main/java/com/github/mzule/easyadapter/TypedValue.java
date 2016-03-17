@@ -5,6 +5,6 @@ package com.github.mzule.easyadapter;
  */
 public interface TypedValue {
 
-    String getType();
+    Object getType();
 
 }
