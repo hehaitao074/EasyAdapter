@@ -13,7 +13,9 @@ import com.github.mzule.easyadapter.TypedValueConverter;
 import com.github.mzule.easyadapter.TypedValueWrapper;
 import com.github.mzule.easyadapter.ViewSupplier;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by CaoDongping on 3/17/16.
@@ -30,18 +32,20 @@ public class MultiTypeListActivity extends Activity {
         MultiAdapter adapter = new MultiAdapter(this);
         listView.setAdapter(adapter);
 
-        adapter.addAndNotify(Arrays.asList("a", "b", "1", "2", "3", "z"), new TypedValueConverter() {
+        List<String> fake = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            fake.add(UUID.randomUUID().toString());
+        }
+
+        adapter.addAndNotify(fake, new TypedValueConverter() {
             @Override
             public TypedValueWrapper convert(final Object obj) {
                 return new TypedValueWrapper(obj) {
                     @Override
                     public String getType() {
-                        try {
-                            Integer.parseInt(obj.toString());
-                            return "number";
-                        } catch (Throwable e) {
-                            return "alphabet";
-                        }
+                        String raw = (String) obj;
+                        char c = raw.charAt(0);
+                        return c >= '0' && c <= '9' ? "number" : "alphabet";
                     }
                 };
             }
