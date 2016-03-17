@@ -22,8 +22,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.Bind;
-
 /**
  * Created by CaoDongping on 3/17/16.
  */
@@ -100,12 +98,9 @@ class MultiAdapter extends MultiTypeAdapter {
     protected ViewSupplier<TypedValue> createViewSupplier(final Context context, int position, ViewGroup parent, Object type) {
         if (type.equals(Post.class)) {
             return new ViewSupplier<TypedValue>(context) {
-                @Bind(R.id.nameView)
-                TextView nameView;
-                @Bind(R.id.contentView)
-                TextView contentView;
-                @Bind(R.id.avatarView)
-                ImageView avatarView;
+                private TextView nameView;
+                private TextView contentView;
+                private ImageView avatarView;
 
                 @Override
                 protected int getLayoutResourceId() {
@@ -129,14 +124,10 @@ class MultiAdapter extends MultiTypeAdapter {
             };
         } else if (type.equals(Repost.class)) {
             return new ViewSupplier<TypedValue>(context) {
-                @Bind(R.id.nameView)
-                TextView nameView;
-                @Bind(R.id.contentView)
-                TextView contentView;
-                @Bind(R.id.avatarView)
-                ImageView avatarView;
-                @Bind(R.id.quoteView)
-                TextView quoteView;
+                private TextView nameView;
+                private TextView contentView;
+                private ImageView avatarView;
+                private TextView quoteView;
 
                 @Override
                 protected int getLayoutResourceId() {
