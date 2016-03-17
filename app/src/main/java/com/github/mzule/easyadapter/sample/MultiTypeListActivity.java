@@ -57,8 +57,7 @@ class MultiAdapter extends MultiTypeAdapter {
 
     @Override
     protected void registerTypes() {
-        registerType("number");
-        registerType("alphabet");
+        registerType("number", "alphabet");
     }
 
     @Override

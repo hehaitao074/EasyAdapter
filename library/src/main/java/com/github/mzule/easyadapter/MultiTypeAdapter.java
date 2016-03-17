@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,8 +24,8 @@ public abstract class MultiTypeAdapter extends BaseAdapter {
         registerTypes();
     }
 
-    protected void registerType(String type) {
-        types.add(type);
+    protected void registerType(String... type) {
+        this.types.addAll(Arrays.asList(type));
     }
 
     @Override
