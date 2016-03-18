@@ -91,20 +91,6 @@ public abstract class MultiTypeAdapter extends BaseAdapter {
         return viewSupplier;
     }
 
-
-    public void add(List<? extends Object> data, TypedValueConverter converter) {
-        List<TypedValue> typedValues = new ArrayList<>(data.size());
-        for (Object obj : data) {
-            typedValues.add(converter.convert(obj));
-        }
-        add(typedValues);
-    }
-
-    public void addAndNotify(List<? extends Object> data, TypedValueConverter converter) {
-        add(data, converter);
-        notifyDataSetChanged();
-    }
-
     public void add(List<TypedValue> data) {
         all.addAll(data);
     }
