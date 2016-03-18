@@ -1,7 +1,6 @@
 package com.github.mzule.easyadapter;
 
 import android.content.Context;
-import android.support.annotation.IdRes;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -25,7 +24,7 @@ public abstract class ViewSupplier<T> {
     }
 
     @SuppressWarnings("unchecked")
-    protected <V> V findViewById(@IdRes int id) {
+    protected <V> V findViewById(int id) {
         return (V) view.findViewById(id);
     }
 

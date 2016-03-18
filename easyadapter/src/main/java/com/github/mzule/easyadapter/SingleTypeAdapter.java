@@ -17,7 +17,7 @@ public abstract class SingleTypeAdapter<T> extends BaseAdapter {
 
     public SingleTypeAdapter(Context context) {
         this.context = context;
-        this.items = new ArrayList<>();
+        this.items = new ArrayList<T>();
     }
 
     @Override

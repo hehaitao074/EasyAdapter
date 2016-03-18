@@ -18,8 +18,8 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
 
     public MultiTypeAdapter(Context context) {
         this.context = context;
-        this.items = new ArrayList<>();
-        this.viewSupplierTypes = new ArrayList<>();
+        this.items = new ArrayList<T>();
+        this.viewSupplierTypes = new ArrayList<Class<? extends ViewSupplier>>();
         registerTypes();
     }
 

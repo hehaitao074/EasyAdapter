@@ -18,7 +18,7 @@ public abstract class TypePerEntityAdapter<T> extends MultiTypeAdapter<T> {
 
     @Override
     protected final void registerTypes() {
-        map = new HashMap<>();
+        map = new HashMap<Class, Class<? extends ViewSupplier>>();
         registerEntityViewSupplierTypes();
         Collection<Class<? extends ViewSupplier>> values = map.values();
         for (Class<? extends ViewSupplier> c : values) {
