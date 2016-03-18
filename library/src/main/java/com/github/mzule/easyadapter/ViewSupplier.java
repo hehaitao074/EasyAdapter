@@ -6,11 +6,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 public abstract class ViewSupplier<T> {
-    private final View view;
+    private Context context;
+    private View view;
+
+    public ViewSupplier() {
+    }
 
     public ViewSupplier(Context context) {
-        view = LayoutInflater.from(context).inflate(getLayoutResourceId(), null, false);
-        bind();
+        inflateView(context);
+    }
+
+    public ViewSupplier<T> inflateView(Context context) {
+        this.context = context;
+        this.view = LayoutInflater.from(context).inflate(getLayoutResourceId(), null, false);
+        return this;
+    }
+
+    protected Context getContext() {
+        return context;
     }
 
     @SuppressWarnings("unchecked")

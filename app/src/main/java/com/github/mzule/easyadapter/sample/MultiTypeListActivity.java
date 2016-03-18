@@ -3,20 +3,20 @@ package com.github.mzule.easyadapter.sample;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.github.mzule.easyadapter.MultiTypeAdapter;
 import com.github.mzule.easyadapter.TypedValue;
-import com.github.mzule.easyadapter.ViewSupplier;
 import com.github.mzule.easyadapter.sample.po.Ad;
 import com.github.mzule.easyadapter.sample.po.Post;
 import com.github.mzule.easyadapter.sample.po.Recommend;
 import com.github.mzule.easyadapter.sample.po.Repost;
 import com.github.mzule.easyadapter.sample.po.Tip;
+import com.github.mzule.easyadapter.sample.viewsupplier.AdViewSupplier;
+import com.github.mzule.easyadapter.sample.viewsupplier.PostViewSupplier;
+import com.github.mzule.easyadapter.sample.viewsupplier.RecommendViewSupplier;
+import com.github.mzule.easyadapter.sample.viewsupplier.RepostViewSupplier;
+import com.github.mzule.easyadapter.sample.viewsupplier.TipViewSupplier;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +34,7 @@ public class MultiTypeListActivity extends Activity {
 
         ListView listView = (ListView) findViewById(R.id.listView);
 
-        MultiAdapter adapter = new MultiAdapter(this);
+        TimelineAdapter adapter = new TimelineAdapter(this);
         listView.setAdapter(adapter);
 
         adapter.addAndNotify(makeFakeData());
@@ -83,154 +83,18 @@ public class MultiTypeListActivity extends Activity {
     }
 }
 
-class MultiAdapter extends MultiTypeAdapter {
+class TimelineAdapter extends MultiTypeAdapter {
 
-    public MultiAdapter(Context context) {
+    public TimelineAdapter(Context context) {
         super(context);
     }
 
     @Override
     protected void registerTypes() {
-        registerType(Post.class, Repost.class, Ad.class, Recommend.class, Tip.class);
-    }
-
-    @Override
-    protected ViewSupplier<TypedValue> createViewSupplier(final Context context, int position, ViewGroup parent, Object type) {
-        if (type.equals(Post.class)) {
-            return new ViewSupplier<TypedValue>(context) {
-                private TextView nameView;
-                private TextView contentView;
-                private ImageView avatarView;
-
-                @Override
-                protected int getLayoutResourceId() {
-                    return R.layout.item_post;
-                }
-
-                @Override
-                protected void bind() {
-                    nameView = findViewById(R.id.nameView);
-                    contentView = findViewById(R.id.contentView);
-                    avatarView = findViewById(R.id.avatarView);
-                }
-
-                @Override
-                public void render(int position, TypedValue data) {
-                    Post post = (Post) data;
-                    nameView.setText(post.getName());
-                    contentView.setText(post.getContent());
-                    Glide.with(context).load(post.getAvatar()).centerCrop().placeholder(R.drawable.placeholder).into(avatarView);
-                }
-            };
-        } else if (type.equals(Repost.class)) {
-            return new ViewSupplier<TypedValue>(context) {
-                private TextView nameView;
-                private TextView contentView;
-                private ImageView avatarView;
-                private TextView quoteView;
-
-                @Override
-                protected int getLayoutResourceId() {
-                    return R.layout.item_repost;
-                }
-
-                @Override
-                protected void bind() {
-                    nameView = findViewById(R.id.nameView);
-                    contentView = findViewById(R.id.contentView);
-                    avatarView = findViewById(R.id.avatarView);
-                    quoteView = findViewById(R.id.quoteView);
-                }
-
-                @Override
-                public void render(int position, TypedValue data) {
-                    Repost repost = (Repost) data;
-                    nameView.setText(repost.getName());
-                    contentView.setText(repost.getContent());
-                    quoteView.setText(String.format("%s: %s", repost.getPost().getName(), repost.getPost().getContent()));
-                    Glide.with(context).load(repost.getAvatar()).centerCrop().placeholder(R.drawable.placeholder).into(avatarView);
-                }
-            };
-        } else if (type.equals(Ad.class)) {
-            return new ViewSupplier<TypedValue>(context) {
-                private ImageView adView;
-
-                @Override
-                protected int getLayoutResourceId() {
-                    return R.layout.item_ad;
-                }
-
-                @Override
-                protected void bind() {
-                    adView = findViewById(R.id.adView);
-                }
-
-                @Override
-                public void render(int position, TypedValue data) {
-                    Ad ad = (Ad) data;
-                    Glide.with(context).load(ad.getImageUrl()).centerCrop().into(adView);
-                }
-            };
-        } else if (type.equals(Recommend.class)) {
-            return new ViewSupplier<TypedValue>(context) {
-                private List<ImageView> imageViews;
-                private List<TextView> textViews;
-
-                @Override
-                protected int getLayoutResourceId() {
-                    return R.layout.item_recommend;
-                }
-
-                @Override
-                protected void bind() {
-                    imageViews = new ArrayList<>();
-                    textViews = new ArrayList<>();
-
-                    ViewGroup imageContainer = findViewById(R.id.imageContainer);
-                    for (int i = 0; i < imageContainer.getChildCount(); i++) {
-                        if (imageContainer.getChildAt(i) instanceof ImageView) {
-                            imageViews.add((ImageView) imageContainer.getChildAt(i));
-                        }
-                    }
-
-                    ViewGroup nameContainer = findViewById(R.id.nameContainer);
-                    for (int i = 0; i < nameContainer.getChildCount(); i++) {
-                        if (nameContainer.getChildAt(i) instanceof TextView) {
-                            textViews.add((TextView) nameContainer.getChildAt(i));
-                        }
-                    }
-                }
-
-                @Override
-                public void render(int position, TypedValue data) {
-                    Recommend recommend = (Recommend) data;
-                    for (int i = 0; i < recommend.getUsers().length; i++) {
-                        Glide.with(context).load(recommend.getUsers()[i].getAvatar()).centerCrop().placeholder(R.drawable.placeholder).into(imageViews.get(i));
-                        textViews.get(i).setText(recommend.getUsers()[i].getName());
-                    }
-                }
-            };
-        } else if (type.equals(Tip.class)) {
-            return new ViewSupplier<TypedValue>(context) {
-                private TextView tipView;
-
-                @Override
-                protected int getLayoutResourceId() {
-                    return R.layout.item_tip;
-                }
-
-                @Override
-                protected void bind() {
-                    tipView = findViewById(R.id.tip);
-                }
-
-                @Override
-                public void render(int position, TypedValue data) {
-                    Tip tip = (Tip) data;
-                    tipView.setText(tip.getTip());
-                }
-            };
-        }
-        return null;
+        registerType(Post.class, PostViewSupplier.class);
+        registerType(Repost.class, RepostViewSupplier.class);
+        registerType(Ad.class, AdViewSupplier.class);
+        registerType(Recommend.class, RecommendViewSupplier.class);
+        registerType(Tip.class, TipViewSupplier.class);
     }
 }

@@ -6,26 +6,28 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by CaoDongping on 3/17/16.
  */
 public abstract class MultiTypeAdapter extends BaseAdapter {
     private List<TypedValue> all;
-    private List<Object> types;
+    private Map<Object, Class<? extends ViewSupplier>> types;
     private Context context;
 
     public MultiTypeAdapter(Context context) {
         this.context = context;
         this.all = new ArrayList<>();
-        this.types = new ArrayList<>();
+        this.types = new HashMap<>();
         registerTypes();
     }
 
-    protected void registerType(Object... type) {
-        this.types.addAll(Arrays.asList(type));
+    protected void registerType(Object type, Class<? extends ViewSupplier> viewSupplier) {
+        this.types.put(type, viewSupplier);
     }
 
     @Override
@@ -35,7 +37,16 @@ public abstract class MultiTypeAdapter extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        return types.indexOf(all.get(position).getType());
+        Set<Object> keys = types.keySet();
+        int i = 0;
+        Object type = getItem(position).getType();
+        for (Object key : keys) {
+            if (key.equals(type)) {
+                return i;
+            }
+            i++;
+        }
+        throw new IllegalAccessError(String.format("type not registered [%s]", type.toString()));
     }
 
     @Override
@@ -57,13 +68,27 @@ public abstract class MultiTypeAdapter extends BaseAdapter {
     @SuppressWarnings("unchecked")
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            ViewSupplier<TypedValue> viewSupplier = createViewSupplier(context, position, parent, all.get(position).getType());
+            ViewSupplier<? extends TypedValue> viewSupplier = getViewSupplier(context, all.get(position).getType());
             convertView = viewSupplier.getView();
             convertView.setTag(viewSupplier);
         }
         ViewSupplier<TypedValue> viewSupplier = (ViewSupplier<TypedValue>) convertView.getTag();
         viewSupplier.render(position, getItem(position));
         return convertView;
+    }
+
+    @SuppressWarnings("unchecked")
+    private ViewSupplier<? extends TypedValue> getViewSupplier(Context context, Object type) {
+        Class<? extends ViewSupplier> cls = types.get(type);
+        ViewSupplier<? extends TypedValue> viewSupplier;
+        try {
+            viewSupplier = cls.newInstance();
+        } catch (Throwable e) {
+            e.printStackTrace();
+            throw new IllegalAccessError("error on instantiation class " + cls.toString());
+        }
+        viewSupplier.inflateView(context).bind();
+        return viewSupplier;
     }
 
 
@@ -99,6 +124,4 @@ public abstract class MultiTypeAdapter extends BaseAdapter {
     }
 
     protected abstract void registerTypes();
-
-    protected abstract ViewSupplier<TypedValue> createViewSupplier(Context context, int position, ViewGroup parent, Object type);
 }
