@@ -5,8 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.ListView;
 
-import com.github.mzule.easyadapter.MultiTypeAdapter;
-import com.github.mzule.easyadapter.ViewSupplier;
+import com.github.mzule.easyadapter.TypePerEntityAdapter;
 import com.github.mzule.easyadapter.sample.po.Ad;
 import com.github.mzule.easyadapter.sample.po.Post;
 import com.github.mzule.easyadapter.sample.po.Recommend;
@@ -83,38 +82,18 @@ public class MultiTypeListActivity extends Activity {
     }
 }
 
-class TimelineAdapter extends MultiTypeAdapter<Object> {
+class TimelineAdapter extends TypePerEntityAdapter<Object> {
 
     public TimelineAdapter(Context context) {
         super(context);
     }
 
     @Override
-    protected void registerTypes() {
-        registerViewSupplierType(PostViewSupplier.class);
-        registerViewSupplierType(RepostViewSupplier.class);
-        registerViewSupplierType(TipViewSupplier.class);
-        registerViewSupplierType(RecommendViewSupplier.class);
-        registerViewSupplierType(AdViewSupplier.class);
-    }
-
-    @Override
-    protected Class<? extends ViewSupplier> getViewSupplierType(int position, Object data) {
-        if (data instanceof Post) {
-            return PostViewSupplier.class;
-        }
-        if (data instanceof Repost) {
-            return RepostViewSupplier.class;
-        }
-        if (data instanceof Tip) {
-            return TipViewSupplier.class;
-        }
-        if (data instanceof Ad) {
-            return AdViewSupplier.class;
-        }
-        if (data instanceof Recommend) {
-            return RecommendViewSupplier.class;
-        }
-        return null;
+    protected void registerEntityViewSupplierTypes() {
+        registerType(Post.class, PostViewSupplier.class);
+        registerType(Repost.class, RepostViewSupplier.class);
+        registerType(Tip.class, TipViewSupplier.class);
+        registerType(Recommend.class, RecommendViewSupplier.class);
+        registerType(Ad.class, AdViewSupplier.class);
     }
 }
