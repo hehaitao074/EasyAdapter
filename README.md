@@ -1,6 +1,6 @@
 # EasyAdapter
 
-一种简单的Adapter解决方案，支持多种ViewType，轻松创建可复用的ListView.
+一种简单的Adapter解决方案，支持多种ViewType，轻松创建`ViewHolder`模式ListView.
 
 ## 安装
 
@@ -47,10 +47,14 @@ public class TipViewSupplier extends ViewSupplier<Tip> {
 `ViewSupplier`提供了一个`findViewById(int)`方法，可以根据声明的类型进行强制转换。
 
 1. `getLayoutResourceId()`负责提供布局文件;
-2. `bind()`负责绑定View, 结合ButterKnife使用，效果更好，例`ButterKnife.bind(this, getView())`;
+2. `bind()`负责绑定View, 结合`ButterKnife`使用，效果更好，例`ButterKnife.bind(this, getView())`;
 3. `render(int, T)`负责渲染UI.
 
-### 2. SingleTypeAdapter
+### 2. Adapters
+
+项目提供了3个`Adapter`基类，每个基类都包含了`add(List<T>)`/`addAndNotify(List<T>)`/`clear()`/`clearAndNotify()`四个方法添加和清除`adapter`内的数据，可选是否`notifyDataSetChanged`
+
+#### 1. SingleTypeAdapter
 
 `SingleTypeAdapter`适合仅有一种类型View的`ListView`，典型实现如下：
 
@@ -68,17 +72,17 @@ public class PlainAdapter extends SingleTypeAdapter<String> {
 }
 ```
 
-### 3. MultiTypeAdapter
+#### 2. MultiTypeAdapter
 
 顾名思义，`MultiTypeAdapter`适用于需要在`ListView`上显示多种类型View的时候，比如说微博客户端，一堆微博之间，夹杂几个广告，正好适用。典型实现：
 
 ```
-
+// TODO
 ```
 
-### 4.TypePerEntityAdapter
+#### 3.TypePerEntityAdapter
 
-`TypePerEntityAdapter`是`MultiTypeAdapter`的子类，适用于每个数据实体class都对应不同的ViewSupplier实现，例如:
+`TypePerEntityAdapter`是`MultiTypeAdapter`的子类，适用于每个数据实体class都对应不同的`ViewSupplier`实现，例如:
 
 ```
 public class TimelineAdapter extends TypePerEntityAdapter<Object> {
