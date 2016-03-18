@@ -1,13 +1,11 @@
 package com.github.mzule.easyadapter.sample.po;
 
-import com.github.mzule.easyadapter.TypedValue;
-
 import java.io.Serializable;
 
 /**
  * Created by CaoDongping on 3/17/16.
  */
-public class Post implements Serializable, TypedValue {
+public class Post implements Serializable {
     private String name;
     private String avatar;
     private String content;
@@ -40,10 +38,5 @@ public class Post implements Serializable, TypedValue {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    @Override
-    public Object getType() {
-        return getClass();
     }
 }

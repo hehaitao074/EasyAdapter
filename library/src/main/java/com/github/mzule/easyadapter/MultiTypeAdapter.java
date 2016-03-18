@@ -6,57 +6,50 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by CaoDongping on 3/17/16.
  */
-public abstract class MultiTypeAdapter extends BaseAdapter {
-    private List<TypedValue> all;
-    private Map<Object, Class<? extends ViewSupplier>> types;
+public abstract class MultiTypeAdapter<T> extends BaseAdapter {
+    private List<T> data;
+    private List<Class<? extends ViewSupplier>> viewSupplierTypes;
     private Context context;
 
     public MultiTypeAdapter(Context context) {
         this.context = context;
-        this.all = new ArrayList<>();
-        this.types = new HashMap<>();
+        this.data = new ArrayList<>();
+        this.viewSupplierTypes = new ArrayList<>();
         registerTypes();
     }
 
-    protected void registerType(Object type, Class<? extends ViewSupplier> viewSupplier) {
-        this.types.put(type, viewSupplier);
+    protected void registerViewSupplierType(Class<? extends ViewSupplier> cls) {
+        this.viewSupplierTypes.add(cls);
     }
 
     @Override
     public int getCount() {
-        return all.size();
+        return data.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        Set<Object> keys = types.keySet();
-        int i = 0;
-        Object type = getItem(position).getType();
-        for (Object key : keys) {
-            if (key.equals(type)) {
-                return i;
-            }
-            i++;
+        Class<? extends ViewSupplier> cls = getViewSupplierType(position, getItem(position));
+        int type = viewSupplierTypes.indexOf(cls);
+        if (type < 0) {
+            throw new IllegalAccessError(String.format("type not registered [%s]", cls.toString()));
         }
-        throw new IllegalAccessError(String.format("type not registered [%s]", type.toString()));
+        return type;
     }
 
     @Override
     public int getViewTypeCount() {
-        return types.size();
+        return viewSupplierTypes.size();
     }
 
     @Override
-    public TypedValue getItem(int position) {
-        return all.get(position);
+    public T getItem(int position) {
+        return data.get(position);
     }
 
     @Override
@@ -68,19 +61,18 @@ public abstract class MultiTypeAdapter extends BaseAdapter {
     @SuppressWarnings("unchecked")
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            ViewSupplier<? extends TypedValue> viewSupplier = getViewSupplier(context, all.get(position).getType());
+            ViewSupplier<? extends T> viewSupplier = getViewSupplier(context, getViewSupplierType(position, getItem(position)));
             convertView = viewSupplier.getView();
             convertView.setTag(viewSupplier);
         }
-        ViewSupplier<TypedValue> viewSupplier = (ViewSupplier<TypedValue>) convertView.getTag();
+        ViewSupplier<T> viewSupplier = (ViewSupplier<T>) convertView.getTag();
         viewSupplier.render(position, getItem(position));
         return convertView;
     }
 
     @SuppressWarnings("unchecked")
-    private ViewSupplier<? extends TypedValue> getViewSupplier(Context context, Object type) {
-        Class<? extends ViewSupplier> cls = types.get(type);
-        ViewSupplier<? extends TypedValue> viewSupplier;
+    private ViewSupplier<? extends T> getViewSupplier(Context context, Class<? extends ViewSupplier> cls) {
+        ViewSupplier<? extends T> viewSupplier;
         try {
             viewSupplier = cls.newInstance();
         } catch (Throwable e) {
@@ -91,17 +83,17 @@ public abstract class MultiTypeAdapter extends BaseAdapter {
         return viewSupplier;
     }
 
-    public void add(List<TypedValue> data) {
-        all.addAll(data);
+    public void add(List<? extends T> data) {
+        this.data.addAll(data);
     }
 
-    public void addAndNotify(List<TypedValue> data) {
+    public void addAndNotify(List<? extends T> data) {
         add(data);
         notifyDataSetChanged();
     }
 
     public void clear() {
-        all.clear();
+        data.clear();
     }
 
     public void clearAndNotify() {
@@ -110,4 +102,6 @@ public abstract class MultiTypeAdapter extends BaseAdapter {
     }
 
     protected abstract void registerTypes();
+
+    protected abstract Class<? extends ViewSupplier> getViewSupplierType(int position, T data);
 }

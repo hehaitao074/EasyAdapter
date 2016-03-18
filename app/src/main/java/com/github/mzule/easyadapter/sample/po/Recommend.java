@@ -1,13 +1,11 @@
 package com.github.mzule.easyadapter.sample.po;
 
-import com.github.mzule.easyadapter.TypedValue;
-
 import java.io.Serializable;
 
 /**
  * Created by CaoDongping on 3/17/16.
  */
-public class Recommend implements Serializable, TypedValue {
+public class Recommend implements Serializable {
     private User[] users;
 
     public Recommend(User[] users) {
@@ -20,11 +18,6 @@ public class Recommend implements Serializable, TypedValue {
 
     public void setUsers(User[] users) {
         this.users = users;
-    }
-
-    @Override
-    public Object getType() {
-        return getClass();
     }
 
     public static class User {

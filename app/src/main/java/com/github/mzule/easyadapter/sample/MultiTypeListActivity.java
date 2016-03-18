@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.github.mzule.easyadapter.MultiTypeAdapter;
-import com.github.mzule.easyadapter.TypedValue;
+import com.github.mzule.easyadapter.ViewSupplier;
 import com.github.mzule.easyadapter.sample.po.Ad;
 import com.github.mzule.easyadapter.sample.po.Post;
 import com.github.mzule.easyadapter.sample.po.Recommend;
@@ -40,8 +40,8 @@ public class MultiTypeListActivity extends Activity {
         adapter.addAndNotify(makeFakeData());
     }
 
-    private List<TypedValue> makeFakeData() {
-        List<TypedValue> data = new ArrayList<>();
+    private List<Object> makeFakeData() {
+        List<Object> data = new ArrayList<>();
         data.add(new Post("不狂能叫小青年@", "http://t.cn/RGKNTpx", "今天做了一个新项目，感觉真好。"));
         data.add(new Post("对你的依赖早已成（习惯", "http://t.cn/RGru8qh", "四月霸权番（雾）《甲铁城的卡巴内瑞》最新预告公布！讲述在虚构的岛国“日之本”，少年少女和僵尸作战谋生的故事。这真的不是【战国+蒸汽朋克】版的巨人吗"));
         data.add(new Post("奈何桥上吻别", "http://t.cn/RG6bKdx", "来上海出差，出于好奇租了个BYD的秦玩玩，结果到酒店发现，根本没法充电，不过也好，正好感觉一下他的混动系统的工作效率～"));
@@ -83,7 +83,7 @@ public class MultiTypeListActivity extends Activity {
     }
 }
 
-class TimelineAdapter extends MultiTypeAdapter {
+class TimelineAdapter extends MultiTypeAdapter<Object> {
 
     public TimelineAdapter(Context context) {
         super(context);
@@ -91,10 +91,30 @@ class TimelineAdapter extends MultiTypeAdapter {
 
     @Override
     protected void registerTypes() {
-        registerType(Post.class, PostViewSupplier.class);
-        registerType(Repost.class, RepostViewSupplier.class);
-        registerType(Ad.class, AdViewSupplier.class);
-        registerType(Recommend.class, RecommendViewSupplier.class);
-        registerType(Tip.class, TipViewSupplier.class);
+        registerViewSupplierType(PostViewSupplier.class);
+        registerViewSupplierType(RepostViewSupplier.class);
+        registerViewSupplierType(TipViewSupplier.class);
+        registerViewSupplierType(RecommendViewSupplier.class);
+        registerViewSupplierType(AdViewSupplier.class);
+    }
+
+    @Override
+    protected Class<? extends ViewSupplier> getViewSupplierType(int position, Object data) {
+        if (data instanceof Post) {
+            return PostViewSupplier.class;
+        }
+        if (data instanceof Repost) {
+            return RepostViewSupplier.class;
+        }
+        if (data instanceof Tip) {
+            return TipViewSupplier.class;
+        }
+        if (data instanceof Ad) {
+            return AdViewSupplier.class;
+        }
+        if (data instanceof Recommend) {
+            return RecommendViewSupplier.class;
+        }
+        return null;
     }
 }

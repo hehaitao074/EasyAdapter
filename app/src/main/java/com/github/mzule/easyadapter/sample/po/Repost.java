@@ -1,13 +1,11 @@
 package com.github.mzule.easyadapter.sample.po;
 
-import com.github.mzule.easyadapter.TypedValue;
-
 import java.io.Serializable;
 
 /**
  * Created by CaoDongping on 3/17/16.
  */
-public class Repost implements Serializable, TypedValue {
+public class Repost implements Serializable {
 
     private String name;
     private String avatar;
@@ -51,10 +49,5 @@ public class Repost implements Serializable, TypedValue {
 
     public void setPost(Post post) {
         this.post = post;
-    }
-
-    @Override
-    public Object getType() {
-        return getClass();
     }
 }
