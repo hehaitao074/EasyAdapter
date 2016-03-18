@@ -3,7 +3,6 @@ package com.github.mzule.easyadapter.sample;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -43,7 +42,7 @@ class PlainAdapter extends SingleTypeAdapter<String> {
     }
 
     @Override
-    protected ViewSupplier<String> createViewSupplier(Context context, int position, ViewGroup parent) {
+    protected ViewSupplier<String> createViewSupplier(Context context) {
         return new ViewSupplier<String>(context) {
             private TextView textView;
 

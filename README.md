@@ -55,7 +55,7 @@ public class PlainAdapter extends SingleTypeAdapter<String> {
     }
 
     @Override
-    protected ViewSupplier<String> createViewSupplier(Context context, int position, ViewGroup parent) {
+    protected ViewSupplier<String> createViewSupplier(Context context) {
         // return your ViewSupplier instance here.
     }
 }

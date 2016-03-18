@@ -38,7 +38,7 @@ public abstract class SingleTypeAdapter<T> extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            ViewSupplier<T> viewSupplier = createViewSupplier(context, position, parent);
+            ViewSupplier<T> viewSupplier = createViewSupplier(context);
             convertView = viewSupplier.getView();
             convertView.setTag(viewSupplier);
         }
@@ -48,7 +48,9 @@ public abstract class SingleTypeAdapter<T> extends BaseAdapter {
         return convertView;
     }
 
-    protected abstract ViewSupplier<T> createViewSupplier(Context context, int position, ViewGroup parent);
+    public Context getContext() {
+        return context;
+    }
 
     public void add(List<T> data) {
         items.addAll(data);
@@ -67,4 +69,6 @@ public abstract class SingleTypeAdapter<T> extends BaseAdapter {
         clear();
         notifyDataSetChanged();
     }
+
+    protected abstract ViewSupplier<T> createViewSupplier(Context context);
 }

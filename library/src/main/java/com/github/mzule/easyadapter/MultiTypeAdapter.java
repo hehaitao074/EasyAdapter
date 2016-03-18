@@ -12,13 +12,13 @@ import java.util.List;
  * Created by CaoDongping on 3/17/16.
  */
 public abstract class MultiTypeAdapter<T> extends BaseAdapter {
-    private List<T> data;
+    private List<T> items;
     private List<Class<? extends ViewSupplier>> viewSupplierTypes;
     private Context context;
 
     public MultiTypeAdapter(Context context) {
         this.context = context;
-        this.data = new ArrayList<>();
+        this.items = new ArrayList<>();
         this.viewSupplierTypes = new ArrayList<>();
         registerTypes();
     }
@@ -29,7 +29,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return data.size();
+        return items.size();
     }
 
     @Override
@@ -49,7 +49,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
 
     @Override
     public T getItem(int position) {
-        return data.get(position);
+        return items.get(position);
     }
 
     @Override
@@ -61,7 +61,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     @SuppressWarnings("unchecked")
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            ViewSupplier<? extends T> viewSupplier = getViewSupplier(context, getViewSupplierType(position, getItem(position)));
+            ViewSupplier<? extends T> viewSupplier = createViewSupplier(context, getViewSupplierType(position, getItem(position)));
             convertView = viewSupplier.getView();
             convertView.setTag(viewSupplier);
         }
@@ -71,7 +71,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     }
 
     @SuppressWarnings("unchecked")
-    private ViewSupplier<? extends T> getViewSupplier(Context context, Class<? extends ViewSupplier> cls) {
+    private ViewSupplier<? extends T> createViewSupplier(Context context, Class<? extends ViewSupplier> cls) {
         ViewSupplier<? extends T> viewSupplier;
         try {
             viewSupplier = cls.getConstructor(Context.class).newInstance(context);
@@ -84,7 +84,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     }
 
     public void add(List<? extends T> data) {
-        this.data.addAll(data);
+        this.items.addAll(data);
     }
 
     public void addAndNotify(List<? extends T> data) {
@@ -93,7 +93,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     }
 
     public void clear() {
-        data.clear();
+        items.clear();
     }
 
     public void clearAndNotify() {
