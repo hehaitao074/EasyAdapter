@@ -1,5 +1,6 @@
 package com.github.mzule.easyadapter.sample.viewsupplier;
 
+import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +17,10 @@ public class RepostViewSupplier extends ViewSupplier<Repost> {
     private TextView contentView;
     private ImageView avatarView;
     private TextView quoteView;
+
+    public RepostViewSupplier(Context context) {
+        super(context);
+    }
 
     @Override
     protected int getLayoutResourceId() {

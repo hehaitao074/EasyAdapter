@@ -74,7 +74,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     private ViewSupplier<? extends T> getViewSupplier(Context context, Class<? extends ViewSupplier> cls) {
         ViewSupplier<? extends T> viewSupplier;
         try {
-            viewSupplier = cls.newInstance();
+            viewSupplier = cls.getConstructor(Context.class).newInstance(context);
         } catch (Throwable e) {
             e.printStackTrace();
             throw new IllegalAccessError("error on instantiation class " + cls.toString());

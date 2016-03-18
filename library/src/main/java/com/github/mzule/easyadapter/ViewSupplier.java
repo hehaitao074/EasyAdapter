@@ -9,9 +9,6 @@ public abstract class ViewSupplier<T> {
     private Context context;
     private View view;
 
-    public ViewSupplier() {
-    }
-
     public ViewSupplier(Context context) {
         inflateView(context);
     }

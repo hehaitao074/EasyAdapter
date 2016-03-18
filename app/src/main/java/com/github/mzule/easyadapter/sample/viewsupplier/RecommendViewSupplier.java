@@ -1,5 +1,6 @@
 package com.github.mzule.easyadapter.sample.viewsupplier;
 
+import android.content.Context;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,6 +19,10 @@ import java.util.List;
 public class RecommendViewSupplier extends ViewSupplier<Recommend> {
     private List<ImageView> imageViews;
     private List<TextView> textViews;
+
+    public RecommendViewSupplier(Context context) {
+        super(context);
+    }
 
     @Override
     protected int getLayoutResourceId() {
