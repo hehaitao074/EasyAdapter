@@ -24,12 +24,12 @@ import java.util.List;
 /**
  * Created by CaoDongping on 3/17/16.
  */
-public class MultiTypeListActivity extends Activity {
+public class TypePerEntityListActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_multi_type_list);
+        setContentView(R.layout.activity_type_per_entity_list);
 
         ListView listView = (ListView) findViewById(R.id.listView);
 

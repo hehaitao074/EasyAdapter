@@ -79,7 +79,6 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
             e.printStackTrace();
             throw new IllegalAccessError("error on instantiation class " + cls.toString());
         }
-        viewSupplier.inflateView(context).bind();
         return viewSupplier;
     }
 
