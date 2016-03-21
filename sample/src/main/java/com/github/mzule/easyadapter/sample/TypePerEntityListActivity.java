@@ -10,7 +10,6 @@ import com.github.mzule.easyadapter.sample.po.Ad;
 import com.github.mzule.easyadapter.sample.po.Post;
 import com.github.mzule.easyadapter.sample.po.Recommend;
 import com.github.mzule.easyadapter.sample.po.Repost;
-import com.github.mzule.easyadapter.sample.po.Tip;
 import com.github.mzule.easyadapter.sample.viewsupplier.AdViewSupplier;
 import com.github.mzule.easyadapter.sample.viewsupplier.PostViewSupplier;
 import com.github.mzule.easyadapter.sample.viewsupplier.RecommendViewSupplier;
@@ -77,7 +76,7 @@ public class TypePerEntityListActivity extends Activity {
                 new Recommend.User("胡军", "http://t.cn/RGrkRRf"),
                 new Recommend.User("孙凯", "http://t.cn/RGrkEX7")
         }));
-        data.add(12, new Tip("上次看到这里"));
+        data.add(12, "上次看到这里");
         return data;
     }
 }
@@ -92,7 +91,7 @@ class TimelineAdapter extends TypePerEntityAdapter<Object> {
     protected void registerEntityViewSupplierTypes() {
         registerType(Post.class, PostViewSupplier.class);
         registerType(Repost.class, RepostViewSupplier.class);
-        registerType(Tip.class, TipViewSupplier.class);
+        registerType(String.class, TipViewSupplier.class);
         registerType(Recommend.class, RecommendViewSupplier.class);
         registerType(Ad.class, AdViewSupplier.class);
     }

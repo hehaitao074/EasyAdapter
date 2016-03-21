@@ -27,6 +27,10 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
         this.viewSupplierTypes.add(cls);
     }
 
+    public List<Class<? extends ViewSupplier>> getViewSupplierTypes() {
+        return viewSupplierTypes;
+    }
+
     @Override
     public int getCount() {
         return items.size();
@@ -61,7 +65,8 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     @SuppressWarnings("unchecked")
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            ViewSupplier<? extends T> viewSupplier = createViewSupplier(context, getViewSupplierType(position, getItem(position)));
+            ViewSupplier<? extends T> viewSupplier = createViewSupplier(getViewSupplierType(position, getItem(position)));
+            viewSupplier.inflateView(context).bind();
             convertView = viewSupplier.getView();
             convertView.setTag(viewSupplier);
         }
@@ -71,10 +76,10 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     }
 
     @SuppressWarnings("unchecked")
-    private ViewSupplier<? extends T> createViewSupplier(Context context, Class<? extends ViewSupplier> cls) {
+    private ViewSupplier<? extends T> createViewSupplier(Class<? extends ViewSupplier> cls) {
         ViewSupplier<? extends T> viewSupplier;
         try {
-            viewSupplier = cls.getConstructor(Context.class).newInstance(context);
+            viewSupplier = cls.newInstance();
         } catch (Throwable e) {
             e.printStackTrace();
             throw new IllegalAccessError("error on instantiation class " + cls.toString());

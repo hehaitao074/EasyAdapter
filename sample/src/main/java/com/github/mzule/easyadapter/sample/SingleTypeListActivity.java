@@ -4,10 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.github.mzule.easyadapter.SingleTypeAdapter;
 import com.github.mzule.easyadapter.ViewSupplier;
+import com.github.mzule.easyadapter.sample.viewsupplier.TipViewSupplier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,29 +37,12 @@ public class SingleTypeListActivity extends Activity {
 
 class PlainAdapter extends SingleTypeAdapter<String> {
 
-    public PlainAdapter(Activity activity) {
-        super(activity);
+    public PlainAdapter(Context context) {
+        super(context);
     }
 
     @Override
-    protected ViewSupplier<String> createViewSupplier(Context context) {
-        return new ViewSupplier<String>(context) {
-            private TextView textView;
-
-            @Override
-            protected int getLayoutResourceId() {
-                return R.layout.item_text;
-            }
-
-            @Override
-            protected void bind() {
-                this.textView = findViewById(R.id.textView);
-            }
-
-            @Override
-            public void render(int position, String data) {
-                textView.setText(data);
-            }
-        };
+    protected Class<? extends ViewSupplier> singleViewSupplierType() {
+        return TipViewSupplier.class;
     }
 }

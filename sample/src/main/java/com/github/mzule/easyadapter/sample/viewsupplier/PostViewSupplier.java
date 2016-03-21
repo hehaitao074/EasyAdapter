@@ -1,6 +1,5 @@
 package com.github.mzule.easyadapter.sample.viewsupplier;
 
-import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,10 +15,6 @@ public class PostViewSupplier extends ViewSupplier<Post> {
     private TextView nameView;
     private TextView contentView;
     private ImageView avatarView;
-
-    public PostViewSupplier(Context context) {
-        super(context);
-    }
 
     @Override
     protected int getLayoutResourceId() {

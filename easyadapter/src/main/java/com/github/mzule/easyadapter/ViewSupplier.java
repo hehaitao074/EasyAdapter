@@ -8,12 +8,7 @@ public abstract class ViewSupplier<T> {
     private Context context;
     private View view;
 
-    public ViewSupplier(Context context) {
-        inflateView(context);
-        bind();
-    }
-
-    private ViewSupplier<T> inflateView(Context context) {
+    ViewSupplier<T> inflateView(Context context) {
         this.context = context;
         this.view = LayoutInflater.from(context).inflate(getLayoutResourceId(), null, false);
         return this;

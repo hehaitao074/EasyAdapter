@@ -1,21 +1,15 @@
 package com.github.mzule.easyadapter.sample.viewsupplier;
 
-import android.content.Context;
 import android.widget.TextView;
 
 import com.github.mzule.easyadapter.ViewSupplier;
 import com.github.mzule.easyadapter.sample.R;
-import com.github.mzule.easyadapter.sample.po.Tip;
 
 /**
  * Created by CaoDongping on 3/18/16.
  */
-public class TipViewSupplier extends ViewSupplier<Tip> {
+public class TipViewSupplier extends ViewSupplier<String> {
     private TextView tipView;
-
-    public TipViewSupplier(Context context) {
-        super(context);
-    }
 
     @Override
     protected int getLayoutResourceId() {
@@ -28,7 +22,7 @@ public class TipViewSupplier extends ViewSupplier<Tip> {
     }
 
     @Override
-    public void render(int position, Tip tip) {
-        tipView.setText(tip.getTip());
+    public void render(int position, String tip) {
+        tipView.setText(tip);
     }
 }
