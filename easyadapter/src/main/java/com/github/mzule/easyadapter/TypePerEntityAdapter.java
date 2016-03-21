@@ -10,30 +10,30 @@ import java.util.Map;
  * Created by CaoDongping on 3/18/16.
  */
 public abstract class TypePerEntityAdapter<T> extends MultiTypeAdapter<T> {
-    private Map<Class, Class<? extends ViewSupplier>> map;
+    private Map<Class, Class<? extends ViewType>> map;
 
     public TypePerEntityAdapter(Context context) {
         super(context);
     }
 
     @Override
-    protected final void registerTypes() {
-        map = new HashMap<Class, Class<? extends ViewSupplier>>();
-        registerEntityViewSupplierTypes();
-        Collection<Class<? extends ViewSupplier>> values = map.values();
-        for (Class<? extends ViewSupplier> c : values) {
-            registerViewSupplierType(c);
+    protected final void registerViewTypes() {
+        map = new HashMap<Class, Class<? extends ViewType>>();
+        mapEntityViewTypes();
+        Collection<Class<? extends ViewType>> values = map.values();
+        for (Class<? extends ViewType> c : values) {
+            registerViewType(c);
         }
     }
 
-    protected final void registerType(Class<? extends T> entityType, Class<? extends ViewSupplier> viewSupplierType) {
-        map.put(entityType, viewSupplierType);
+    protected final void mapEntityViewType(Class<? extends T> entityType, Class<? extends ViewType> viewTypes) {
+        map.put(entityType, viewTypes);
     }
 
-    protected abstract void registerEntityViewSupplierTypes();
+    protected abstract void mapEntityViewTypes();
 
     @Override
-    protected final Class<? extends ViewSupplier> getViewSupplierType(int position, T data) {
+    protected final Class<? extends ViewType> getViewType(int position, T data) {
         return map.get(data.getClass());
     }
 }

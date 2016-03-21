@@ -10,11 +10,11 @@ import com.github.mzule.easyadapter.sample.po.Ad;
 import com.github.mzule.easyadapter.sample.po.Post;
 import com.github.mzule.easyadapter.sample.po.Recommend;
 import com.github.mzule.easyadapter.sample.po.Repost;
-import com.github.mzule.easyadapter.sample.viewsupplier.AdViewSupplier;
-import com.github.mzule.easyadapter.sample.viewsupplier.PostViewSupplier;
-import com.github.mzule.easyadapter.sample.viewsupplier.RecommendViewSupplier;
-import com.github.mzule.easyadapter.sample.viewsupplier.RepostViewSupplier;
-import com.github.mzule.easyadapter.sample.viewsupplier.TipViewSupplier;
+import com.github.mzule.easyadapter.sample.viewtypes.AdViewType;
+import com.github.mzule.easyadapter.sample.viewtypes.PostViewType;
+import com.github.mzule.easyadapter.sample.viewtypes.RecommendViewType;
+import com.github.mzule.easyadapter.sample.viewtypes.RepostViewType;
+import com.github.mzule.easyadapter.sample.viewtypes.TipViewType;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -88,11 +88,11 @@ class TimelineAdapter extends TypePerEntityAdapter<Object> {
     }
 
     @Override
-    protected void registerEntityViewSupplierTypes() {
-        registerType(Post.class, PostViewSupplier.class);
-        registerType(Repost.class, RepostViewSupplier.class);
-        registerType(String.class, TipViewSupplier.class);
-        registerType(Recommend.class, RecommendViewSupplier.class);
-        registerType(Ad.class, AdViewSupplier.class);
+    protected void mapEntityViewTypes() {
+        mapEntityViewType(Post.class, PostViewType.class);
+        mapEntityViewType(Repost.class, RepostViewType.class);
+        mapEntityViewType(String.class, TipViewType.class);
+        mapEntityViewType(Recommend.class, RecommendViewType.class);
+        mapEntityViewType(Ad.class, AdViewType.class);
     }
 }

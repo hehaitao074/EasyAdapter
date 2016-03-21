@@ -1,14 +1,14 @@
-package com.github.mzule.easyadapter.sample.viewsupplier;
+package com.github.mzule.easyadapter.sample.viewtypes;
 
 import android.widget.TextView;
 
-import com.github.mzule.easyadapter.ViewSupplier;
+import com.github.mzule.easyadapter.ViewType;
 import com.github.mzule.easyadapter.sample.R;
 
 /**
  * Created by CaoDongping on 3/18/16.
  */
-public class TipViewSupplier extends ViewSupplier<String> {
+public class TipViewType extends ViewType<String> {
     private TextView tipView;
 
     @Override

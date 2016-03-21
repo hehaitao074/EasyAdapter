@@ -18,14 +18,14 @@ dependencies {
 
 ## 说明
 
-项目包含四个类, `ViewSupplier`, `SingleTypeAdapter`, `MultiTypeAdapter`, `TypePerEntityAdapter`, 其中`ViewSupplier`负责创建、绑定(Hold)、渲染View；`SingleTypeAdapter`支持单独一种样式类型的Adapter, `MultiTypeAdapter`, `TypePerEntityAdapter`支持多种样式类型的Adapter；`TypePerEntityAdapter`是`MultiTypeAdapter`的子类。
+项目包含四个类, `ViewType`, `SingleTypeAdapter`, `MultiTypeAdapter`, `TypePerEntityAdapter`, 其中`ViewType`负责创建、绑定(Hold)、渲染View；`SingleTypeAdapter`支持单独一种样式类型的Adapter, `MultiTypeAdapter`, `TypePerEntityAdapter`支持多种样式类型的Adapter；`TypePerEntityAdapter`是`MultiTypeAdapter`的子类。
 
-### 1. ViewSupplier
+### 1. ViewType
 
-`ViewSupplier`负责创建、绑定、渲染View，每个`ViewSupplier`对应传统模式下的一个`ViewHolder`，一个典型的`ViewSupplier`实现如下：
+`ViewType`负责创建、绑定、渲染View，每个`ViewType`对应传统模式下的一个`ViewHolder`，一个典型的`ViewType`实现如下：
 
 ```
-public class TipViewSupplier extends ViewSupplier<Tip> {
+public class TipViewType extends ViewType<Tip> {
     private TextView tipView;
 
     @Override
@@ -44,7 +44,7 @@ public class TipViewSupplier extends ViewSupplier<Tip> {
     }
 }
 ```
-`ViewSupplier`提供了一个`findViewById(int)`方法，可以根据声明的类型进行强制转换。
+`ViewType`提供了一个`findViewById(int)`方法，可以根据声明的类型进行强制转换。
 
 1. `getLayoutResourceId()`负责提供布局文件;
 2. `bind()`负责绑定View, 结合`ButterKnife`使用，效果更好，例`ButterKnife.bind(this, getView())`;
@@ -59,15 +59,15 @@ public class TipViewSupplier extends ViewSupplier<Tip> {
 `SingleTypeAdapter`适合仅有一种类型View的`ListView`，典型实现如下：
 
 ```
-public class PlainAdapter extends SingleTypeAdapter<String> {
+class PlainAdapter extends SingleTypeAdapter<String> {
 
     public PlainAdapter(Context context) {
         super(context);
     }
 
     @Override
-    protected ViewSupplier<String> createViewSupplier(Context context) {
-        // return your ViewSupplier instance here.
+    protected Class<? extends ViewType> singleViewType() {
+        return TipViewType.class;
     }
 }
 ```
@@ -82,22 +82,22 @@ public class PlainAdapter extends SingleTypeAdapter<String> {
 
 #### 3.TypePerEntityAdapter
 
-`TypePerEntityAdapter`是`MultiTypeAdapter`的子类，适用于每个数据实体class都对应不同的`ViewSupplier`实现，例如:
+`TypePerEntityAdapter`是`MultiTypeAdapter`的子类，适用于每个数据实体class都对应不同的`ViewType`实现，例如:
 
 ```
-public class TimelineAdapter extends TypePerEntityAdapter<Object> {
+class TimelineAdapter extends TypePerEntityAdapter<Object> {
 
     public TimelineAdapter(Context context) {
         super(context);
     }
 
     @Override
-    protected void registerEntityViewSupplierTypes() {
-        registerType(Post.class, PostViewSupplier.class);
-        registerType(Repost.class, RepostViewSupplier.class);
-        registerType(Tip.class, TipViewSupplier.class);
-        registerType(Recommend.class, RecommendViewSupplier.class);
-        registerType(Ad.class, AdViewSupplier.class);
+    protected void mapEntityViewTypes() {
+        mapEntityViewType(Post.class, PostViewType.class);
+        mapEntityViewType(Repost.class, RepostViewType.class);
+        mapEntityViewType(String.class, TipViewType.class);
+        mapEntityViewType(Recommend.class, RecommendViewType.class);
+        mapEntityViewType(Ad.class, AdViewType.class);
     }
 }
 ```

@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.widget.ListView;
 
 import com.github.mzule.easyadapter.SingleTypeAdapter;
-import com.github.mzule.easyadapter.ViewSupplier;
-import com.github.mzule.easyadapter.sample.viewsupplier.TipViewSupplier;
+import com.github.mzule.easyadapter.ViewType;
+import com.github.mzule.easyadapter.sample.viewtypes.TipViewType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ class PlainAdapter extends SingleTypeAdapter<String> {
     }
 
     @Override
-    protected Class<? extends ViewSupplier> singleViewSupplierType() {
-        return TipViewSupplier.class;
+    protected Class<? extends ViewType> singleViewType() {
+        return TipViewType.class;
     }
 }

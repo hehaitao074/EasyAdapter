@@ -1,11 +1,11 @@
-package com.github.mzule.easyadapter.sample.viewsupplier;
+package com.github.mzule.easyadapter.sample.viewtypes;
 
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.github.mzule.easyadapter.ViewSupplier;
+import com.github.mzule.easyadapter.ViewType;
 import com.github.mzule.easyadapter.sample.R;
 import com.github.mzule.easyadapter.sample.po.Recommend;
 
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by CaoDongping on 3/18/16.
  */
-public class RecommendViewSupplier extends ViewSupplier<Recommend> {
+public class RecommendViewType extends ViewType<Recommend> {
     private List<ImageView> imageViews;
     private List<TextView> textViews;
 

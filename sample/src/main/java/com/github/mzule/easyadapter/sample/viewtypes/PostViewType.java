@@ -1,17 +1,17 @@
-package com.github.mzule.easyadapter.sample.viewsupplier;
+package com.github.mzule.easyadapter.sample.viewtypes;
 
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.github.mzule.easyadapter.ViewSupplier;
+import com.github.mzule.easyadapter.ViewType;
 import com.github.mzule.easyadapter.sample.R;
 import com.github.mzule.easyadapter.sample.po.Post;
 
 /**
  * Created by CaoDongping on 3/18/16.
  */
-public class PostViewSupplier extends ViewSupplier<Post> {
+public class PostViewType extends ViewType<Post> {
     private TextView nameView;
     private TextView contentView;
     private ImageView avatarView;

@@ -11,14 +11,14 @@ public abstract class SingleTypeAdapter<T> extends MultiTypeAdapter<T> {
     }
 
     @Override
-    protected final void registerTypes() {
-        registerViewSupplierType(singleViewSupplierType());
+    protected final void registerViewTypes() {
+        registerViewType(singleViewType());
     }
 
-    protected abstract Class<? extends ViewSupplier> singleViewSupplierType();
+    protected abstract Class<? extends ViewType> singleViewType();
 
     @Override
-    protected Class<? extends ViewSupplier> getViewSupplierType(int position, T data) {
-        return getViewSupplierTypes().get(0);
+    protected final Class<? extends ViewType> getViewType(int position, T data) {
+        return getViewTypes().get(0);
     }
 }

@@ -13,22 +13,22 @@ import java.util.List;
  */
 public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     private List<T> items;
-    private List<Class<? extends ViewSupplier>> viewSupplierTypes;
+    private List<Class<? extends ViewType>> viewTypes;
     private Context context;
 
     public MultiTypeAdapter(Context context) {
         this.context = context;
         this.items = new ArrayList<T>();
-        this.viewSupplierTypes = new ArrayList<Class<? extends ViewSupplier>>();
-        registerTypes();
+        this.viewTypes = new ArrayList<Class<? extends ViewType>>();
+        registerViewTypes();
     }
 
-    protected void registerViewSupplierType(Class<? extends ViewSupplier> cls) {
-        this.viewSupplierTypes.add(cls);
+    protected void registerViewType(Class<? extends ViewType> cls) {
+        this.viewTypes.add(cls);
     }
 
-    public List<Class<? extends ViewSupplier>> getViewSupplierTypes() {
-        return viewSupplierTypes;
+    public List<Class<? extends ViewType>> getViewTypes() {
+        return viewTypes;
     }
 
     @Override
@@ -38,8 +38,8 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
 
     @Override
     public int getItemViewType(int position) {
-        Class<? extends ViewSupplier> cls = getViewSupplierType(position, getItem(position));
-        int type = viewSupplierTypes.indexOf(cls);
+        Class<? extends ViewType> cls = getViewType(position, getItem(position));
+        int type = viewTypes.indexOf(cls);
         if (type < 0) {
             throw new IllegalAccessError(String.format("type not registered [%s]", cls.toString()));
         }
@@ -48,7 +48,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
 
     @Override
     public int getViewTypeCount() {
-        return viewSupplierTypes.size();
+        return viewTypes.size();
     }
 
     @Override
@@ -65,26 +65,26 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     @SuppressWarnings("unchecked")
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            ViewSupplier<? extends T> viewSupplier = createViewSupplier(getViewSupplierType(position, getItem(position)));
-            viewSupplier.inflateView(context).bind();
-            convertView = viewSupplier.getView();
-            convertView.setTag(viewSupplier);
+            ViewType<? extends T> viewType = createViewType(getViewType(position, getItem(position)));
+            viewType.inflateView(context).bind();
+            convertView = viewType.getView();
+            convertView.setTag(viewType);
         }
-        ViewSupplier<T> viewSupplier = (ViewSupplier<T>) convertView.getTag();
-        viewSupplier.render(position, getItem(position));
+        ViewType<T> viewType = (ViewType<T>) convertView.getTag();
+        viewType.render(position, getItem(position));
         return convertView;
     }
 
     @SuppressWarnings("unchecked")
-    private ViewSupplier<? extends T> createViewSupplier(Class<? extends ViewSupplier> cls) {
-        ViewSupplier<? extends T> viewSupplier;
+    private ViewType<? extends T> createViewType(Class<? extends ViewType> cls) {
+        ViewType<? extends T> viewType;
         try {
-            viewSupplier = cls.newInstance();
+            viewType = cls.newInstance();
         } catch (Throwable e) {
             e.printStackTrace();
             throw new IllegalAccessError("error on instantiation class " + cls.toString());
         }
-        return viewSupplier;
+        return viewType;
     }
 
     public void add(List<? extends T> data) {
@@ -105,7 +105,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    protected abstract void registerTypes();
+    protected abstract void registerViewTypes();
 
-    protected abstract Class<? extends ViewSupplier> getViewSupplierType(int position, T data);
+    protected abstract Class<? extends ViewType> getViewType(int position, T data);
 }
