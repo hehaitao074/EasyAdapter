@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.mzule.easyadapter:easyadapter:0.1.1'
+    compile 'com.github.mzule.easyadapter:easyadapter:0.1.2'
 }
 ```
 
