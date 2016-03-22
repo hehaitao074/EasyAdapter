@@ -24,7 +24,7 @@ public class ArticleBriefViewType extends ViewType<Article> {
 
     @Override
     public void onRender(int position, Article data) {
-        Glide.with(getContext()).load(data.getImageUrl()).centerCrop().into(imageView);
+        Glide.with(getContext()).load(data.getImageUrl()).centerCrop().placeholder(R.color.gray).into(imageView);
         textView.setText(data.getText());
     }
 }
