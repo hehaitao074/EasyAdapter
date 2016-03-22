@@ -1,6 +1,6 @@
 # EasyAdapter
 
-一种简单的Adapter解决方案，支持多种ViewType，轻松创建`ViewHolder`模式ListView.
+一种简单的Adapter解决方案，支持多种ViewType，轻松创建`ViewHolder`模式Adapter.
 
 ## 安装
 
@@ -16,11 +16,11 @@ dependencies {
 }
 ```
 
-## 说明
+## 使用步骤
 
 项目包含四个类, `ViewType`, `SingleTypeAdapter`, `MultiTypeAdapter`, `TypePerEntityAdapter`, 其中`ViewType`负责创建、绑定(Hold)、渲染View；`SingleTypeAdapter`支持单独一种样式类型的Adapter, `MultiTypeAdapter`, `TypePerEntityAdapter`支持多种样式类型的Adapter；`TypePerEntityAdapter`是`MultiTypeAdapter`的子类。
 
-### 1. ViewType
+### 1. 编写`ViewType`(s)
 
 `ViewType`负责创建、绑定、渲染View，每个`ViewType`对应传统模式下的一个`ViewHolder`，一个典型的`ViewType`实现如下：
 
@@ -42,13 +42,12 @@ public class TipViewType extends ViewType<String> {
 ```
 `ViewType`提供了一个`findViewById(int)`方法，可以根据声明的类型进行强制转换。
 
-1. `getLayoutResourceId()`负责提供布局文件;
-2. `bind()`负责绑定View, 结合`ButterKnife`使用，效果更好，例`ButterKnife.bind(this, getView())`;
-3. `render(int, T)`负责渲染UI.
+1. `onCreate`可以通过调用`setContentView(int)`或者`setContentView(View)`创建View，初始化成员变量;
+2. `onRender(int, T)`负责渲染UI，绑定数据.
 
-### 2. Adapters
+### 2. 选择合适的`Adapter`
 
-项目提供了3个`Adapter`基类，每个基类都包含了`add(List<T>)`/`addAndNotify(List<T>)`/`clear()`/`clearAndNotify()`四个方法添加和清除`adapter`内的数据，可选是否`notifyDataSetChanged`
+项目提供了3个`Adapter`基类，下面一一说明。
 
 #### 1. SingleTypeAdapter
 
@@ -96,6 +95,19 @@ class TimelineAdapter extends TypePerEntityAdapter<Object> {
         mapEntityViewType(Ad.class, AdViewType.class);
     }
 }
+```
+
+### 3. 应用`Adapter`
+通过`ListView#setAdapter(Adapter)`使用Adapter,通过`add(List)`/`addAndNotify(List)`/`clear()`/`clearAndNotify()`添加或修改Adapter内的数据。`add(List)`和`addAndNotify(List)`的区别在于是否自动调用`notifyDataSetChanged()`, `clear`亦然。
+
+```
+ListView listView = (ListView) findViewById(R.id.listView);
+listView.setAdapter(adapter);
+List<String> fake = new ArrayList<>();
+for (int i = 0; i < 100; i++) {
+    fake.add(UUID.randomUUID().toString());
+}
+adapter.addAndNotify(fake);
 ```
 
 ## [English]()
