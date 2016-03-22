@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.github.mzule.easyadapter.sample"
-        minSdkVersion 15
+        minSdkVersion 7
         targetSdkVersion 23
         versionCode 1
         versionName "0.1.0"
