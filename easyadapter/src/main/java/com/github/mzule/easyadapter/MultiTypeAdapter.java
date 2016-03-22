@@ -41,7 +41,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
         Class<? extends ViewType> cls = getViewType(position, getItem(position));
         int type = viewTypes.indexOf(cls);
         if (type < 0) {
-            throw new IllegalAccessError(String.format("type not registered [%s]", cls.toString()));
+            throw new TypeRegisteException(String.format("ViewType not registered [%s]", cls.toString()));
         }
         return type;
     }
@@ -82,7 +82,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
             viewType = cls.newInstance();
         } catch (Throwable e) {
             e.printStackTrace();
-            throw new IllegalAccessError("error on instantiation class " + cls.toString());
+            throw new RuntimeException("Error on instantiation class [" + cls.toString() + "], please make sure the class is `public` for others.");
         }
         return viewType;
     }
