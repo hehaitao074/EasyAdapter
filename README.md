@@ -5,14 +5,8 @@
 ## 安装
 
 ```
-repositories {
-    maven {
-        url 'https://dl.bintray.com/mzule/maven/'
-    }
-}
-
 dependencies {
-    compile 'com.github.mzule.easyadapter:easyadapter:0.1.2'
+    compile 'com.github.mzule.easyadapter:easyadapter:1.0.0'
 }
 ```
 
