@@ -8,9 +8,16 @@ public abstract class ViewType<T> {
     private Context context;
     private View view;
 
-    ViewType<T> inflateView(Context context) {
+    protected void setContentView(int layoutId) {
+        setContentView(LayoutInflater.from(context).inflate(layoutId, null, false));
+    }
+
+    protected void setContentView(View view) {
+        this.view = view;
+    }
+
+    ViewType<T> with(Context context) {
         this.context = context;
-        this.view = LayoutInflater.from(context).inflate(getLayoutResourceId(), null, false);
         return this;
     }
 
@@ -27,9 +34,7 @@ public abstract class ViewType<T> {
         return view;
     }
 
-    protected abstract int getLayoutResourceId();
+    public abstract void onCreate();
 
-    protected abstract void bind();
-
-    public abstract void render(int position, T data);
+    public abstract void onRender(int position, T data);
 }

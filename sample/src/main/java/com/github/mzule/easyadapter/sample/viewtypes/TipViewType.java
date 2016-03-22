@@ -12,17 +12,13 @@ public class TipViewType extends ViewType<String> {
     private TextView tipView;
 
     @Override
-    protected int getLayoutResourceId() {
-        return R.layout.item_tip;
+    public void onCreate() {
+        setContentView(R.layout.item_tip);
+        this.tipView = findViewById(R.id.tip);
     }
 
     @Override
-    protected void bind() {
-        tipView = findViewById(R.id.tip);
-    }
-
-    @Override
-    public void render(int position, String tip) {
+    public void onRender(int position, String tip) {
         tipView.setText(tip);
     }
 }

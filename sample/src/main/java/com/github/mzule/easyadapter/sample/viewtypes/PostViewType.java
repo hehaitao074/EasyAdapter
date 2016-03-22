@@ -17,19 +17,15 @@ public class PostViewType extends ViewType<Post> {
     private ImageView avatarView;
 
     @Override
-    protected int getLayoutResourceId() {
-        return R.layout.item_post;
-    }
-
-    @Override
-    protected void bind() {
+    public void onCreate() {
+        setContentView(R.layout.item_post);
         nameView = findViewById(R.id.nameView);
         contentView = findViewById(R.id.contentView);
         avatarView = findViewById(R.id.avatarView);
     }
 
     @Override
-    public void render(int position, Post post) {
+    public void onRender(int position, Post post) {
         nameView.setText(post.getName());
         contentView.setText(post.getContent());
         Glide.with(getContext()).load(post.getAvatar()).centerCrop().placeholder(R.drawable.placeholder).into(avatarView);

@@ -18,20 +18,16 @@ public class RepostViewType extends ViewType<Repost> {
     private TextView quoteView;
 
     @Override
-    protected int getLayoutResourceId() {
-        return R.layout.item_repost;
+    public void onCreate() {
+        setContentView(R.layout.item_repost);
+        this.nameView = findViewById(R.id.nameView);
+        this.contentView = findViewById(R.id.contentView);
+        this.avatarView = findViewById(R.id.avatarView);
+        this.quoteView = findViewById(R.id.quoteView);
     }
 
     @Override
-    protected void bind() {
-        nameView = findViewById(R.id.nameView);
-        contentView = findViewById(R.id.contentView);
-        avatarView = findViewById(R.id.avatarView);
-        quoteView = findViewById(R.id.quoteView);
-    }
-
-    @Override
-    public void render(int position, Repost repost) {
+    public void onRender(int position, Repost repost) {
         nameView.setText(repost.getName());
         contentView.setText(repost.getContent());
         quoteView.setText(String.format("%s: %s", repost.getPost().getName(), repost.getPost().getContent()));

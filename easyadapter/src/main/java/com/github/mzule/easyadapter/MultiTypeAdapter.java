@@ -66,12 +66,12 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             ViewType<? extends T> viewType = createViewType(getViewType(position, getItem(position)));
-            viewType.inflateView(context).bind();
+            viewType.with(context).onCreate();
             convertView = viewType.getView();
             convertView.setTag(viewType);
         }
         ViewType<T> viewType = (ViewType<T>) convertView.getTag();
-        viewType.render(position, getItem(position));
+        viewType.onRender(position, getItem(position));
         return convertView;
     }
 

@@ -20,12 +20,9 @@ public class RecommendViewType extends ViewType<Recommend> {
     private List<TextView> textViews;
 
     @Override
-    protected int getLayoutResourceId() {
-        return R.layout.item_recommend;
-    }
+    public void onCreate() {
+        setContentView(R.layout.item_recommend);
 
-    @Override
-    protected void bind() {
         imageViews = new ArrayList<>();
         textViews = new ArrayList<>();
 
@@ -45,7 +42,7 @@ public class RecommendViewType extends ViewType<Recommend> {
     }
 
     @Override
-    public void render(int position, Recommend recommend) {
+    public void onRender(int position, Recommend recommend) {
         for (int i = 0; i < recommend.getUsers().length; i++) {
             Glide.with(getContext()).load(recommend.getUsers()[i].getAvatar()).centerCrop().placeholder(R.drawable.placeholder).into(imageViews.get(i));
             textViews.get(i).setText(recommend.getUsers()[i].getName());
