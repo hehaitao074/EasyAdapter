@@ -32,6 +32,16 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
         return viewTypes;
     }
 
+    /**
+     * Retrieve the raw viewType (value returned by `getItemViewType(int)`) at adapter.
+     *
+     * @param viewType ViewType class
+     * @return 0, 1, 2... The raw viewType value.
+     */
+    public int getRawViewType(Class<? extends ViewType> viewType) {
+        return viewTypes.indexOf(viewType);
+    }
+
     public List<T> getData() {
         return Collections.unmodifiableList(data);
     }
@@ -93,7 +103,9 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     }
 
     public void add(List<? extends T> data) {
-        this.data.addAll(data);
+        if (data != null) {
+            this.data.addAll(data);
+        }
     }
 
     public void addAndNotify(List<? extends T> data) {
