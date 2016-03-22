@@ -6,19 +6,20 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by CaoDongping on 3/17/16.
  */
 public abstract class MultiTypeAdapter<T> extends BaseAdapter {
-    private List<T> items;
+    private List<T> data;
     private List<Class<? extends ViewType>> viewTypes;
     private Context context;
 
     public MultiTypeAdapter(Context context) {
         this.context = context;
-        this.items = new ArrayList<T>();
+        this.data = new ArrayList<T>();
         this.viewTypes = new ArrayList<Class<? extends ViewType>>();
         registerViewTypes();
     }
@@ -31,9 +32,13 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
         return viewTypes;
     }
 
+    public List<T> getData() {
+        return Collections.unmodifiableList(data);
+    }
+
     @Override
     public int getCount() {
-        return items.size();
+        return data.size();
     }
 
     @Override
@@ -53,7 +58,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
 
     @Override
     public T getItem(int position) {
-        return items.get(position);
+        return data.get(position);
     }
 
     @Override
@@ -88,7 +93,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     }
 
     public void add(List<? extends T> data) {
-        this.items.addAll(data);
+        this.data.addAll(data);
     }
 
     public void addAndNotify(List<? extends T> data) {
@@ -97,7 +102,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter {
     }
 
     public void clear() {
-        items.clear();
+        data.clear();
     }
 
     public void clearAndNotify() {
