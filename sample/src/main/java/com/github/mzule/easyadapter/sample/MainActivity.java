@@ -27,7 +27,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 intent.setClass(this, SingleTypeListActivity.class);
                 break;
             case R.id.multiTypeButton:
-                intent.setClass(this, SingleTypeListActivity.class);
+                intent.setClass(this, MultiTypeListActivity.class);
                 break;
             case R.id.typePerEntityButton:
                 intent.setClass(this, TypePerEntityListActivity.class);

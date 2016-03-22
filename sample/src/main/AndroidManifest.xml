@@ -25,6 +25,9 @@
         <activity
             android:name=".TypePerEntityListActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".MultiTypeListActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

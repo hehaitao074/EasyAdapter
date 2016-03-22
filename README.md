@@ -72,7 +72,29 @@ class PlainAdapter extends SingleTypeAdapter<String> {
 顾名思义，`MultiTypeAdapter`适用于需要在`ListView`上显示多种类型View的时候，比如说微博客户端，一堆微博之间，夹杂几个广告，正好适用。典型实现：
 
 ```
-// TODO
+class ArticleAdapter extends MultiTypeAdapter<Article> {
+
+    public ArticleAdapter(Context context) {
+        super(context);
+    }
+
+    @Override
+    protected void registerViewTypes() {
+        registerViewType(ArticleBriefViewType.class);
+        registerViewType(ArticleFullViewType.class);
+    }
+
+    @Override
+    protected Class<? extends ViewType> getViewType(int position, Article data) {
+        switch (data.getStyle()) {
+            case Article.STYLE_FULL:
+                return ArticleFullViewType.class;
+            case Article.STYLE_BRIEF:
+                return ArticleBriefViewType.class;
+        }
+        return null;
+    }
+}
 ```
 
 #### 3.TypePerEntityAdapter
