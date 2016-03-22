@@ -25,22 +25,18 @@ dependencies {
 `ViewType`负责创建、绑定、渲染View，每个`ViewType`对应传统模式下的一个`ViewHolder`，一个典型的`ViewType`实现如下：
 
 ```
-public class TipViewType extends ViewType<Tip> {
+public class TipViewType extends ViewType<String> {
     private TextView tipView;
 
     @Override
-    protected int getLayoutResourceId() {
-        return R.layout.item_tip;
+    public void onCreate() {
+        setContentView(R.layout.item_tip);
+        this.tipView = findViewById(R.id.tip);
     }
 
     @Override
-    protected void bind() {
-        tipView = findViewById(R.id.tip);
-    }
-
-    @Override
-    public void render(int position, Tip tip) {
-        tipView.setText(tip.getTip());
+    public void onRender(int position, String tip) {
+        tipView.setText(tip);
     }
 }
 ```
