@@ -124,6 +124,28 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter implements EasyAda
         notifyDataSetChanged();
     }
 
+    @Override
+    public void remove(int position) {
+        data.remove(position);
+    }
+
+    @Override
+    public void removeAndNotify(int position) {
+        remove(position);
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public void remove(T item) {
+        data.remove(item);
+    }
+
+    @Override
+    public void removeAndNotify(T item) {
+        remove(item);
+        notifyDataSetChanged();
+    }
+
     protected abstract void registerViewTypes();
 
     protected abstract Class<? extends ViewType> getViewType(int position, T data);

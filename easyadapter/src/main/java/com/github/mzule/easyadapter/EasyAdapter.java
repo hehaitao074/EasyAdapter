@@ -15,6 +15,14 @@ public interface EasyAdapter<T> {
 
     void clearAndNotify();
 
+    void remove(int position);
+
+    void removeAndNotify(int position);
+
+    void remove(T item);
+
+    void removeAndNotify(T item);
+
     List<T> getData();
 
     /**
