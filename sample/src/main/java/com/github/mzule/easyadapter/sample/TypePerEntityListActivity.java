@@ -3,9 +3,10 @@ package com.github.mzule.easyadapter.sample;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-import com.github.mzule.easyadapter.TypePerEntityAdapter;
+import com.github.mzule.easyadapter.recycler.TypePerEntityAdapter;
 import com.github.mzule.easyadapter.sample.po.Ad;
 import com.github.mzule.easyadapter.sample.po.Post;
 import com.github.mzule.easyadapter.sample.po.Recommend;
@@ -30,7 +31,8 @@ public class TypePerEntityListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_type_per_entity_list);
 
-        ListView listView = (ListView) findViewById(R.id.listView);
+        RecyclerView listView = (RecyclerView) findViewById(R.id.listView);
+        listView.setLayoutManager(new LinearLayoutManager(this));
 
         TimelineAdapter adapter = new TimelineAdapter(this);
         listView.setAdapter(adapter);

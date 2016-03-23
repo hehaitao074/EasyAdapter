@@ -1,18 +1,21 @@
-package com.github.mzule.easyadapter;
+package com.github.mzule.easyadapter.recycler;
 
 import android.content.Context;
-import android.view.View;
+import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+
+import com.github.mzule.easyadapter.EasyAdapter;
+import com.github.mzule.easyadapter.TypeRegisteException;
+import com.github.mzule.easyadapter.ViewType;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by CaoDongping on 3/17/16.
+ * Created by CaoDongping on 3/22/16.
  */
-public abstract class MultiTypeAdapter<T> extends BaseAdapter implements EasyAdapter<T> {
+public abstract class MultiTypeAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements EasyAdapter<T> {
     private List<T> data;
     private List<Class<? extends ViewType>> viewTypes;
     private Context context;
@@ -44,28 +47,8 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter implements EasyAda
     }
 
     @Override
-    public int getCount() {
+    public int getItemCount() {
         return data.size();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        Class<? extends ViewType> cls = getViewType(position, getItem(position));
-        int type = viewTypes.indexOf(cls);
-        if (type < 0) {
-            throw new TypeRegisteException(String.format("ViewType not registered [%s]", cls.toString()));
-        }
-        return type;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return viewTypes.size();
-    }
-
-    @Override
-    public T getItem(int position) {
-        return data.get(position);
     }
 
     @Override
@@ -74,22 +57,33 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter implements EasyAda
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            ViewType<? extends T> viewType = createViewType(getViewType(position, getItem(position)));
-            viewType.with(context).onCreate();
-            convertView = viewType.getView();
-            convertView.setTag(viewType);
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
+        ViewType<T> viewType = createViewType(viewTypes.get(type));
+        viewType.with(context).onCreate();
+        return new ViewTypeHolder<T>(viewType);
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        Class<? extends ViewType> cls = getViewType(position, data.get(position));
+        int type = viewTypes.indexOf(cls);
+        if (type < 0) {
+            throw new TypeRegisteException(String.format("ViewType not registered [%s]", cls.toString()));
         }
-        ViewType<T> viewType = (ViewType<T>) convertView.getTag();
-        viewType.onRender(position, getItem(position));
-        return convertView;
+        return type;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        ViewTypeHolder<T> viewTypeHolder = (ViewTypeHolder<T>) holder;
+        viewTypeHolder.viewType.onRender(position, data.get(position));
+
     }
 
     @SuppressWarnings("unchecked")
-    private ViewType<? extends T> createViewType(Class<? extends ViewType> cls) {
-        ViewType<? extends T> viewType;
+    private ViewType<T> createViewType(Class<? extends ViewType> cls) {
+        ViewType<T> viewType;
         try {
             viewType = cls.newInstance();
         } catch (Throwable e) {

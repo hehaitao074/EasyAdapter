@@ -3,10 +3,11 @@ package com.github.mzule.easyadapter.sample;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-import com.github.mzule.easyadapter.SingleTypeAdapter;
 import com.github.mzule.easyadapter.ViewType;
+import com.github.mzule.easyadapter.recycler.SingleTypeAdapter;
 import com.github.mzule.easyadapter.sample.viewtypes.TipViewType;
 
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ public class SingleTypeListActivity extends Activity {
 
         PlainAdapter adapter = new PlainAdapter(this);
 
-        ListView listView = (ListView) findViewById(R.id.listView);
+        RecyclerView listView = (RecyclerView) findViewById(R.id.listView);
+        listView.setLayoutManager(new LinearLayoutManager(this));
         listView.setAdapter(adapter);
 
         List<String> fake = new ArrayList<>();

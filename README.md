@@ -1,14 +1,23 @@
 # EasyAdapter
 
-一种简单的Adapter解决方案，支持多种ViewType，轻松创建`ViewHolder`模式Adapter.
+一种简单的Adapter解决方案，支持多种ViewType，轻松创建`ViewHolder`模式Adapter. 支持`ListView`和`RecyclerView`.
 
 ## 安装
+仅支持`ListView`
 
 ```
 dependencies {
     compile 'com.github.mzule.easyadapter:easyadapter:1.0.0'
 }
 ```
+需要支持`RecyclerView`
+```
+dependencies {
+    compile 'com.github.mzule.easyadapter:easyadapter:1.0.0'
+    compile 'com.github.mzule.easyadapter:easyadapterrecycler:1.0.0'
+}
+```
+
 
 ## 使用步骤
 
@@ -41,7 +50,7 @@ public class TipViewType extends ViewType<String> {
 
 ### 2. 选择合适的`Adapter`
 
-项目提供了3个`Adapter`基类，下面一一说明。
+项目为`ListView`,`RecyclerVIew`个提供了3个`Adapter`基类，名字一样，只是包名略作区分，分别是`com.github.mzule.easyadapter`,`com.github.mzule.easyadapter.recycler`。下面一一说明。
 
 #### 1. SingleTypeAdapter
 

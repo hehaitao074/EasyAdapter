@@ -2,11 +2,11 @@ apply plugin: 'com.android.library'
 
 ext {
     bintrayRepo = 'maven'
-    bintrayName = 'easy-adapter'
+    bintrayName = 'easy-adapter-recycler'
 
     publishedGroupId = 'com.github.mzule.easyadapter'
-    libraryName = 'EasyAdapter'
-    artifact = 'easyadapter'
+    libraryName = 'EasyAdapterRecycler'
+    artifact = 'easyadapterrecycler'
 
     libraryDescription = 'Easy to use adaptes.'
 
@@ -25,12 +25,12 @@ ext {
 }
 
 android {
-    compileSdkVersion 15
+    compileSdkVersion 21
     buildToolsVersion "23.0.2"
 
     defaultConfig {
-        minSdkVersion 1
-        targetSdkVersion 22
+        minSdkVersion 15
+        targetSdkVersion 21
         versionCode 1
         versionName "1.0.1"
     }
@@ -44,5 +44,10 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:recyclerview-v7:21.0.3'
+    compile project(':easyadapter')
 }
-
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

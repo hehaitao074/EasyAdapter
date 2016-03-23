@@ -16,7 +16,7 @@ public abstract class ViewType<T> {
         this.view = view;
     }
 
-    ViewType<T> with(Context context) {
+    public ViewType<T> with(Context context) {
         this.context = context;
         return this;
     }

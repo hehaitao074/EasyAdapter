@@ -4,10 +4,11 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.widget.ListView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 
-import com.github.mzule.easyadapter.MultiTypeAdapter;
 import com.github.mzule.easyadapter.ViewType;
+import com.github.mzule.easyadapter.recycler.MultiTypeAdapter;
 import com.github.mzule.easyadapter.sample.po.Article;
 import com.github.mzule.easyadapter.sample.viewtypes.ArticleBriefViewType;
 import com.github.mzule.easyadapter.sample.viewtypes.ArticleFullViewType;
@@ -25,7 +26,8 @@ public class MultiTypeListActivity extends Activity {
         setContentView(R.layout.activity_multi_type_list);
 
         ArticleAdapter adapter = new ArticleAdapter(this);
-        ListView listView = (ListView) findViewById(R.id.listView);
+        RecyclerView listView = (RecyclerView) findViewById(R.id.listView);
+        listView.setLayoutManager(new LinearLayoutManager(this));
         listView.setAdapter(adapter);
 
         adapter.addAndNotify(makeFakeData());

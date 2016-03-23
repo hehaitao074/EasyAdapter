@@ -1,1 +1,1 @@
-include ':sample', ':easyadapter'
+include ':sample', ':easyadapter', ':easyadapterrecycler'
