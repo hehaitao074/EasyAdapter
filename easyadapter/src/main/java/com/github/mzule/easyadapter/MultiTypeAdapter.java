@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -40,7 +39,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter implements EasyAda
 
     @Override
     public List<T> getData() {
-        return Collections.unmodifiableList(data);
+        return data;
     }
 
     @Override

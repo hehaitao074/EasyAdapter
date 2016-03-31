@@ -9,7 +9,6 @@ import com.github.mzule.easyadapter.TypeRegisteException;
 import com.github.mzule.easyadapter.ViewType;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -43,7 +42,7 @@ public abstract class MultiTypeAdapter<T> extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public List<T> getData() {
-        return Collections.unmodifiableList(data);
+        return data;
     }
 
     @Override
