@@ -8,6 +8,7 @@ public abstract class ViewType<T> {
     private Context context;
     private View view;
     private EasyAdapter adapter;
+    private boolean editMode;
 
     protected void setContentView(int layoutId) {
         setContentView(LayoutInflater.from(context).inflate(layoutId, null, false));
@@ -41,6 +42,15 @@ public abstract class ViewType<T> {
 
     public View getView() {
         return view;
+    }
+
+
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 
     public abstract void onCreate();

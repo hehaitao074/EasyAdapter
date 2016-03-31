@@ -34,4 +34,8 @@ public interface EasyAdapter<T> {
     int getRawViewType(Class<? extends ViewType> viewType);
 
     List<Class<? extends ViewType>> getViewTypes();
+
+    boolean isEditMode();
+
+    void setEditMode(boolean editMode);
 }

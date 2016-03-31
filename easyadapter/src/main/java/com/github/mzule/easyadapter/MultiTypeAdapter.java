@@ -15,6 +15,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter implements EasyAda
     private List<T> data;
     private List<Class<? extends ViewType>> viewTypes;
     private Context context;
+    private boolean editMode;
 
     public MultiTypeAdapter(Context context) {
         this.context = context;
@@ -87,6 +88,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter implements EasyAda
         }
         ViewType<T> viewType = (ViewType<T>) convertView.getTag();
         viewType.onRender(position, getItem(position));
+        viewType.setEditMode(isEditMode());
         return convertView;
     }
 
@@ -147,6 +149,16 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter implements EasyAda
     public void removeAndNotify(T item) {
         remove(item);
         notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    @Override
+    public void setEditMode(boolean editMode) {
+        this.editMode = editMode;
     }
 
     protected abstract void registerViewTypes();
