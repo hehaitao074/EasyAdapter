@@ -7,14 +7,14 @@
 
 ```
 dependencies {
-    compile 'com.github.mzule.easyadapter:easyadapter:1.0.2'
+    compile 'com.github.mzule.easyadapter:easyadapter:1.1.0'
 }
 ```
 需要支持`RecyclerView`
 ```
 dependencies {
-    compile 'com.github.mzule.easyadapter:easyadapter:1.0.2'
-    compile 'com.github.mzule.easyadapter:easyadapterrecycler:1.0.2'
+    compile 'com.github.mzule.easyadapter:easyadapter:1.1.0'
+    compile 'com.github.mzule.easyadapter:easyadapterrecycler:1.1.0'
 }
 ```
 
@@ -47,6 +47,8 @@ public class TipViewType extends ViewType<String> {
 
 1. `onCreate`可以通过调用`setContentView(int)`或者`setContentView(View)`创建View，初始化成员变量;
 2. `onRender(int, T)`负责渲染UI，绑定数据.
+
+`ViewType`还提供了一个`getAdapter()`方法直接直接操作Adapter.以及一个`isEditMode()`检查当前是否在编辑模式.
 
 ### 2. 选择合适的`Adapter`
 
