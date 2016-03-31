@@ -157,8 +157,9 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter implements EasyAda
     }
 
     @Override
-    public void setEditMode(boolean editMode) {
+    public void setEditModeAndNotify(boolean editMode) {
         this.editMode = editMode;
+        notifyDataSetChanged();
     }
 
     protected abstract void registerViewTypes();

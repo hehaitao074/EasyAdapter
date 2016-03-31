@@ -37,5 +37,5 @@ public interface EasyAdapter<T> {
 
     boolean isEditMode();
 
-    void setEditMode(boolean editMode);
+    void setEditModeAndNotify(boolean editMode);
 }
