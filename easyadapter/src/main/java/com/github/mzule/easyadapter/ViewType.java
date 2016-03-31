@@ -7,6 +7,7 @@ import android.view.View;
 public abstract class ViewType<T> {
     private Context context;
     private View view;
+    private EasyAdapter adapter;
 
     protected void setContentView(int layoutId) {
         setContentView(LayoutInflater.from(context).inflate(layoutId, null, false));
@@ -19,6 +20,14 @@ public abstract class ViewType<T> {
     public ViewType<T> with(Context context) {
         this.context = context;
         return this;
+    }
+
+    public EasyAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void setAdapter(EasyAdapter adapter) {
+        this.adapter = adapter;
     }
 
     protected Context getContext() {

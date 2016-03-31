@@ -82,6 +82,7 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter implements EasyAda
         if (convertView == null) {
             ViewType<? extends T> viewType = createViewType(getViewType(position, getItem(position)));
             viewType.with(context).onCreate();
+            viewType.setAdapter(this);
             convertView = viewType.getView();
             convertView.setTag(viewType);
         }
