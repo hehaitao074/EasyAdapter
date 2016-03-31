@@ -51,6 +51,9 @@ public abstract class MultiTypeAdapter<T> extends BaseAdapter implements EasyAda
     @Override
     public int getItemViewType(int position) {
         Class<? extends ViewType> cls = getViewType(position, getItem(position));
+        if (cls == null) {
+            throw new TypeRegisteException("No ViewType bind for [" + getItem(position).getClass() + "] at position " + position);
+        }
         int type = viewTypes.indexOf(cls);
         if (type < 0) {
             throw new TypeRegisteException(String.format("ViewType not registered [%s]", cls.toString()));

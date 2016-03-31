@@ -66,6 +66,9 @@ public abstract class MultiTypeAdapter<T> extends RecyclerView.Adapter<RecyclerV
     @Override
     public int getItemViewType(int position) {
         Class<? extends ViewType> cls = getViewType(position, data.get(position));
+        if (cls == null) {
+            throw new TypeRegisteException("No ViewType bind for [" + data.get(position).getClass() + "] at position " + position);
+        }
         int type = viewTypes.indexOf(cls);
         if (type < 0) {
             throw new TypeRegisteException(String.format("ViewType not registered [%s]", cls.toString()));
