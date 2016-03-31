@@ -18,6 +18,7 @@ public abstract class MultiTypeAdapter<T> extends RecyclerView.Adapter<RecyclerV
     private List<T> data;
     private List<Class<? extends ViewType>> viewTypes;
     private Context context;
+    private boolean editMode;
 
     public MultiTypeAdapter(Context context) {
         this.context = context;
@@ -59,6 +60,7 @@ public abstract class MultiTypeAdapter<T> extends RecyclerView.Adapter<RecyclerV
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int type) {
         ViewType<T> viewType = createViewType(viewTypes.get(type));
         viewType.with(context).onCreate();
+        viewType.setAdapter(this);
         return new ViewTypeHolder<T>(viewType);
     }
 
@@ -80,7 +82,7 @@ public abstract class MultiTypeAdapter<T> extends RecyclerView.Adapter<RecyclerV
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ViewTypeHolder<T> viewTypeHolder = (ViewTypeHolder<T>) holder;
         viewTypeHolder.viewType.onRender(position, data.get(position));
-
+        viewTypeHolder.viewType.setEditMode(isEditMode());
     }
 
     @SuppressWarnings("unchecked")
@@ -140,6 +142,17 @@ public abstract class MultiTypeAdapter<T> extends RecyclerView.Adapter<RecyclerV
     @Override
     public void removeAndNotify(T item) {
         remove(item);
+        notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean isEditMode() {
+        return editMode;
+    }
+
+    @Override
+    public void setEditModeAndNotify(boolean editMode) {
+        this.editMode = editMode;
         notifyDataSetChanged();
     }
 

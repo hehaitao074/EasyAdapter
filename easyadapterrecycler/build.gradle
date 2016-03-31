@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/mzule/EasyAdapter/'
     gitUrl = 'https://github.com/mzule/EasyAdapter.git'
 
-    libraryVersion = '1.0.2'
+    libraryVersion = '1.1.0'
 
     developerId = 'mzule'
     developerName = 'Cao Dongping'
@@ -32,7 +32,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
-        versionName "1.0.2"
+        versionName "1.1.0"
     }
     buildTypes {
         release {
@@ -47,7 +47,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'com.android.support:recyclerview-v7:21.0.3'
-    compile 'com.github.mzule.easyadapter:easyadapter:1.0.2'
+    compile 'com.github.mzule.easyadapter:easyadapter:1.1.0'
 }
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
 apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
