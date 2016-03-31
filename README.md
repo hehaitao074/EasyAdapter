@@ -7,14 +7,14 @@
 
 ```
 dependencies {
-    compile 'com.github.mzule.easyadapter:easyadapter:1.1.0'
+    compile 'com.github.mzule.easyadapter:easyadapter:1.1.2'
 }
 ```
 需要支持`RecyclerView`
 ```
 dependencies {
-    compile 'com.github.mzule.easyadapter:easyadapter:1.1.0'
-    compile 'com.github.mzule.easyadapter:easyadapterrecycler:1.1.0'
+    compile 'com.github.mzule.easyadapter:easyadapter:1.1.2'
+    compile 'com.github.mzule.easyadapter:easyadapterrecycler:1.1.2'
 }
 ```
 
