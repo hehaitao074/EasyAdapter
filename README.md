@@ -137,6 +137,4 @@ for (int i = 0; i < 100; i++) {
 adapter.addAndNotify(fake);
 ```
 
-## Demo截图
-
-![image](http://7sbl54.com1.z0.glb.clouddn.com/blog_2.pic.jpg?imageView2/0/w/360/)
+## 尽情享用
