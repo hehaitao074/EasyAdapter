@@ -5,13 +5,13 @@
 ## 安装
 仅支持`ListView`
 
-```
+``` groovy
 dependencies {
     compile 'com.github.mzule.easyadapter:easyadapter:1.1.2'
 }
 ```
 需要支持`RecyclerView`
-```
+``` groovy
 dependencies {
     compile 'com.github.mzule.easyadapter:easyadapter:1.1.2'
     compile 'com.github.mzule.easyadapter:easyadapterrecycler:1.1.2'
@@ -27,7 +27,7 @@ dependencies {
 
 `ViewType`负责创建、绑定、渲染View，每个`ViewType`对应传统模式下的一个`ViewHolder`，一个典型的`ViewType`实现如下：
 
-```
+``` java
 public class TipViewType extends ViewType<String> {
     private TextView tipView;
 
@@ -58,7 +58,7 @@ public class TipViewType extends ViewType<String> {
 
 `SingleTypeAdapter`适合仅有一种类型View的`ListView`，典型实现如下：
 
-```
+``` java
 class PlainAdapter extends SingleTypeAdapter<String> {
 
     public PlainAdapter(Context context) {
@@ -76,7 +76,7 @@ class PlainAdapter extends SingleTypeAdapter<String> {
 
 顾名思义，`MultiTypeAdapter`适用于需要在`ListView`上显示多种类型View的时候，比如说微博客户端，一堆微博之间，夹杂几个广告，正好适用。典型实现：
 
-```
+``` java
 class ArticleAdapter extends MultiTypeAdapter<Article> {
 
     public ArticleAdapter(Context context) {
@@ -106,7 +106,7 @@ class ArticleAdapter extends MultiTypeAdapter<Article> {
 
 `TypePerEntityAdapter`是`MultiTypeAdapter`的子类，适用于每个数据实体class都对应不同的`ViewType`实现，例如:
 
-```
+``` java
 class TimelineAdapter extends TypePerEntityAdapter<Object> {
 
     public TimelineAdapter(Context context) {
@@ -127,7 +127,7 @@ class TimelineAdapter extends TypePerEntityAdapter<Object> {
 ### 3. 应用`Adapter`
 通过`ListView#setAdapter(Adapter)`使用Adapter,通过`add(List)`/`addAndNotify(List)`/`clear()`/`clearAndNotify()`添加或修改Adapter内的数据。`add(List)`和`addAndNotify(List)`的区别在于是否自动调用`notifyDataSetChanged()`, `clear`亦然。
 
-```
+``` java
 ListView listView = (ListView) findViewById(R.id.listView);
 listView.setAdapter(adapter);
 List<String> fake = new ArrayList<>();
